@@ -1,4 +1,5 @@
 import { useLoaderData } from "react-router-dom";
+import Modal from "./Modal";
 
 const ServiceCardDetails = () => {
   const singleData = useLoaderData();
@@ -19,10 +20,18 @@ const ServiceCardDetails = () => {
               Cost : {singleData?.cost} $
             </h1>
             <p className="mb-5 text-justify">{singleData?.description}</p>
-            <button className="btn btn-primary">Book Appointment</button>
+            <button
+              onClick={() =>
+                document.getElementById("details_modal").showModal()
+              }
+              className="btn btn-primary"
+            >
+              Book Appointment
+            </button>
           </div>
         </div>
       </div>
+      <Modal></Modal>
     </div>
   );
 };
