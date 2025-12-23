@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@plugin "daisyui"; /* No brackets */
+
+/* daisyUI v5+ automatically handles themes, 
+   but you can manually set them on the html tag: 
+   <html data-theme="cupcake"> */
