@@ -16,7 +16,10 @@ const PublicRouter = createBrowserRouter([
         loader: async () => {
           const res = await fetch("/service.json");
           const data = await res.json();
-          return data;
+
+          const res2 = await fetch("/feedback.json");
+          const data2 = await res2.json();
+          return { data, data2 };
         },
       },
       {

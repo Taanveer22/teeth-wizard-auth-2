@@ -3,7 +3,7 @@ import ServiceCard from "../components/ServiceCard";
 
 const Treatments = () => {
   const serviceData = useLoaderData();
-  console.log(serviceData);
+  // console.log(serviceData);
   return (
     <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
       {serviceData.map((serviceItem) => (
