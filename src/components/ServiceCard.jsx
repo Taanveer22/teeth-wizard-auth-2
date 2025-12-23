@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
 const ServiceCard = ({ serviceItem }) => {
+  // console.log(serviceItem);
   return (
     <div>
-    
       <div className="card h-96 bg-base-200 shadow-sm">
         <figure>
           <img src={serviceItem?.image} className="h-36 w-full" />
@@ -17,7 +17,9 @@ const ServiceCard = ({ serviceItem }) => {
             {serviceItem?.description.slice(0, 100)}...
           </p>
           <div className="card-actions justify-center">
-            <Link  className="btn btn-primary">Checkout More</Link>
+            <Link to={`/details/${serviceItem?.id}`} className="btn btn-primary">
+              Checkout More
+            </Link>
           </div>
         </div>
       </div>
