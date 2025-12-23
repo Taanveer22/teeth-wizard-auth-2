@@ -13,10 +13,20 @@ const PublicRouter = createBrowserRouter([
       {
         index: true,
         element: <Home></Home>,
+        loader: async () => {
+          const res = await fetch("/service.json");
+          const data = await res.json();
+          return data;
+        },
       },
       {
         path: "/treatments",
         element: <Treatments></Treatments>,
+        loader: async () => {
+          const res = await fetch("/service.json");
+          const data = await res.json();
+          return data;
+        },
       },
       {
         path: "/appointments",

@@ -39,7 +39,7 @@
     "treatment": "Orthodontic Treatment",
     "image": "https://i.ibb.co/vzGy8h7/Orthodontic-treatment.jpg",
     "description": "Many people have teeth that are crowded or crooked.The teeth will be straightened or moved into a better place with orthodontic therapy.This can help to enhance the look of the teeth and the way they bite together,as well as make them simpler to clean.Some people have protruding top front teeth that are ugly.These 'prominent' teeth are more vulnerable to damage,although orthodontic treatment can help to straighten them out.Alternatively,the way the upper and lower jaws connect can contribute to unattractive teeth and an improper bite.Orthodontic therapy may be able to help with both of these issues.",
-    "cost": 1200
+    "cost": 120
   },
   {
     "id": 7,
@@ -53,6 +53,6 @@
     "treatment": "Complete denture",
     "image": "https://i.ibb.co/YB8sYHH/Complete-denture.jpg",
     "description": "The high frequency of tooth decay, along with the progressive ageing of populations in industrialized countries, has resulted in a constant rise in the need for total denture treatment. It is important to examine a variety of concerns during the denture procedure in order to obtain appropriate treatment. The patient's motivation for denture therapy and emotional attitude toward dentures must be assessed before treatment begins.",
-    "cost": 1600
+    "cost": 160
   }
 ]
