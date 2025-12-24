@@ -17,6 +17,41 @@ const Register = () => {
     // Capture the form element to use inside the promise
     const form = e.target;
 
+    // == password validation ==
+    if (password !== conPass) {
+      setErrorMessage("password didnot match");
+      return;
+    }
+
+    if (password.length < 6) {
+      setErrorMessage("password must be 6 characters or more");
+      return;
+    }
+
+    const hasUppercase = /[A-Z]/;
+    if (!hasUppercase.test(password)) {
+      setErrorMessage("give at least one uppercase");
+      return;
+    }
+
+    const hasLowercase = /[a-z]/;
+    if (!hasLowercase.test(password)) {
+      setErrorMessage("give at least one lowercase");
+      return;
+    }
+
+    const hasNumber = /[0-9]/;
+    if (!hasNumber.test(password)) {
+      setErrorMessage("give at least one number");
+      return;
+    }
+
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/;
+    if (!hasSymbol.test(password)) {
+      setErrorMessage("give at least one symbol");
+      return;
+    }
+
     // == reset state stauts ==
     setErrorMessage("");
 
