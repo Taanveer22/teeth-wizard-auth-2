@@ -7,7 +7,7 @@ const Login = () => {
   const { handleGoogleUserSignIn, handleUserLogin } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleLoginForm = (e) => {
+  const handleLoginForm = async (e) => {
     e.preventDefault();
 
     const email = e.target.email.value;
@@ -19,29 +19,53 @@ const Login = () => {
     // == reset state status ===
     setErrorMessage("");
 
-    // === firebase log in ===
-    handleUserLogin(email, password)
-      .then(() => {
-        // no need to manually setUser() state here
-        toast.success("login done");
-        // === RESET FORM FIELDS ===
-        form.reset();
-      })
-      .catch(() => {
-        setErrorMessage("login failed");
-      });
+    // == try catch block ===
+    try {
+      await handleUserLogin(email, password);
+      toast.success("login done");
+      // after login done reset form
+      form.reset();
+    } catch {
+      setErrorMessage("login failed");
+    }
+
+    // ============= firebase log in old system ==============
+    //   handleUserLogin(email, password)
+    //     .then(() => {
+    //       // no need to manually setUser() state here
+    //       toast.success("login done");
+    //       // === RESET FORM FIELDS ===
+    //       form.reset();
+    //     })
+    //     .catch(() => {
+    //       setErrorMessage("login failed");
+    //     });
+    // };
   };
 
-  const handleGoogleUserSignInClick = () => {
-    handleGoogleUserSignIn()
-      .then(() => {
-        // no need to manually setUser() state here
-        toast.success("google login done");
-      })
-      .catch(() => {
-        setErrorMessage("google login failed");
-      });
+  // const handleGoogleUserSignInClick = () => {
+  //   handleGoogleUserSignIn()
+  //     .then(() => {
+  //       // no need to manually setUser() state here
+  //       toast.success("google login done");
+  //     })
+  //     .catch(() => {
+  //       setErrorMessage("google login failed");
+  //     });
+
+  const handleGoogleUserSignInClick = async () => {
+    // reset error state
+    setErrorMessage("");
+
+    // try catch block
+    try {
+      await handleGoogleUserSignIn();
+      toast.success("google login done");
+    } catch {
+      toast.error("google login failed");
+    }
   };
+  
   return (
     <div className="flex justify-center items-center">
       <div>

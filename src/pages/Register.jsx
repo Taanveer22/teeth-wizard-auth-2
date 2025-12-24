@@ -3,10 +3,10 @@ import { AuthContext } from "../providers/AuthProvider";
 import toast from "react-hot-toast";
 
 const Register = () => {
-  const { handleUserRegister } = useContext(AuthContext);
+  const { handleUserRegister, handleUpdateProfile } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleRegisterForm = (e) => {
+  const handleRegisterForm = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const photo = e.target.photo.value;
@@ -14,6 +14,7 @@ const Register = () => {
     const password = e.target.password.value;
     const conPass = e.target.conPass.value;
     console.log(name, photo, email, password, conPass);
+    
     // Capture the form element to use inside the promise
     const form = e.target;
 
@@ -55,17 +56,44 @@ const Register = () => {
     // == reset state stauts ==
     setErrorMessage("");
 
-    // === firebase auth ===
-    handleUserRegister(email, password)
-      .then(() => {
-        // no need to manually setUser() state here
-        toast.success("user register done");
-        // === RESET FORM FIELDS ===
-        form.reset();
-      })
-      .catch(() => {
-        setErrorMessage("unable to register");
-      });
+    try {
+      await handleUserRegister(email, password);
+      toast.success("user register done");
+    } catch {
+      setErrorMessage("user registation failed");
+      return;
+    }
+
+    try {
+      await handleUpdateProfile(name, photo);
+      toast.success("profile updated");
+    } catch {
+      setErrorMessage("profile not updated");
+      return;
+    }
+
+    // finally reset form
+    form.reset();
+
+    // ==================== firebase auth old method ==========================
+    // handleUserRegister(email, password)
+    //   .then(() => {
+    //     // no need to manually setUser() state here
+    //     toast.success("user register done");
+    //     // === RESET FORM FIELDS ===
+    //     form.reset();
+    //     // === firebase function update profile ===
+    //     handleUpdateProfile(name, photo)
+    //       .then(() => {
+    //         toast.success("profile updated");
+    //       })
+    //       .catch(() => {
+    //         toast.error("profile not updated");
+    //       });
+    //   })
+    //   .catch(() => {
+    //     setErrorMessage("unable to register");
+    //   });
   };
 
   return (
