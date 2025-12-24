@@ -6,16 +6,19 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { createContext, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
 // == auth context should be outside component ==
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
   const googleProvider = new GoogleAuthProvider();
   const handleGoogleUserSignIn = () => {
     return signInWithPopup(auth, googleProvider);
   };
+
   const handleUserRegister = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
@@ -29,6 +32,8 @@ const AuthProvider = ({ children }) => {
   };
 
   const authInfo = {
+    user,
+    setUser,
     handleGoogleUserSignIn,
     handleUserRegister,
     handleUserLogin,
@@ -37,12 +42,16 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
+      // If currentUser exists, it sets user
+      //  if not exists, it sets null
+      setUser(currentUser);
+      console.log("Current User in AuthProvider :", currentUser);
     });
 
     return () => {
       unSubscribe();
     };
+    // no need dependency array here
   }, []);
 
   return (

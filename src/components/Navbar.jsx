@@ -1,6 +1,23 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
+  const { user, handleUserLogout } = useContext(AuthContext);
+
+  // console.log(user);
+  const handleUserLogoutClick = () => {
+    // == firebase log out ==
+    handleUserLogout()
+      .then(() => {
+        toast.success("Logout complete");
+      })
+      .catch(() => {
+        toast.error("logout failed");
+      });
+  };
+
   const links = (
     <div className="flex flex-col sm:flex-row gap-4">
       <li>
@@ -73,15 +90,24 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">Teeth Wizard</a>
+          <h1 className="btn btn-ghost text-xl">Teeth Wizard</h1>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          <Link to="/login" className="btn btn-primary">
-            Login
-          </Link>
+          {user && user?.email ? (
+            <div className="flex gap-2 items-center">
+              <p>{user.email}</p>
+              <button onClick={handleUserLogoutClick} className="btn btn-error">
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="btn btn-success">
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </div>

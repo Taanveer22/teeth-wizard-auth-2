@@ -1,13 +1,36 @@
+import { useContext, useState } from "react";
+import { AuthContext } from "../providers/AuthProvider";
+import toast from "react-hot-toast";
+
 const Register = () => {
+  const { handleUserRegister } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleRegisterForm = (e) => {
     e.preventDefault();
-
     const name = e.target.name.value;
     const photo = e.target.photo.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
     const conPass = e.target.conPass.value;
     console.log(name, photo, email, password, conPass);
+    // Capture the form element to use inside the promise
+    const form = e.target;
+
+    // == reset state stauts ==
+    setErrorMessage("");
+
+    // === firebase auth ===
+    handleUserRegister(email, password)
+      .then((result) => {
+        // no need to manually setUser() state here
+        toast.success(result.user.email);
+        // === RESET FORM FIELDS ===
+        form.reset();
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      });
   };
 
   return (
@@ -57,6 +80,9 @@ const Register = () => {
           <button className="btn btn-neutral mt-4">Register</button>
         </fieldset>
       </form>
+      {errorMessage && (
+        <p className="text-lg font-medium text-red-600">{errorMessage}</p>
+      )}
     </div>
   );
 };
