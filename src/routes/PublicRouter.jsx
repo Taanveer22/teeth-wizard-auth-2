@@ -7,6 +7,7 @@ import Profile from "../pages/Profile";
 import ServiceCardDetails from "../components/ServiceCardDetails";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Privacy from "../components/Privacy";
 
 const PublicRouter = createBrowserRouter([
   {
@@ -63,6 +64,7 @@ const PublicRouter = createBrowserRouter([
         path: "/register",
         element: <Register></Register>,
       },
+     
     ],
   },
 ]);

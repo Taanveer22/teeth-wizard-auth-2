@@ -22,14 +22,14 @@ const Register = () => {
 
     // === firebase auth ===
     handleUserRegister(email, password)
-      .then((result) => {
+      .then(() => {
         // no need to manually setUser() state here
-        toast.success(result.user.email);
+        toast.success("user register done");
         // === RESET FORM FIELDS ===
         form.reset();
       })
-      .catch((error) => {
-        setErrorMessage(error.message);
+      .catch(() => {
+        setErrorMessage("unable to register");
       });
   };
 

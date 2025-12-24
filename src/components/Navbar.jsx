@@ -64,7 +64,7 @@ const Navbar = () => {
   );
   return (
     <div>
-      <div className="navbar bg-base-100 shadow-sm">
+      <div className="navbar bg-gray-400 shadow-sm">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -90,15 +90,18 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <h1 className="btn btn-ghost text-xl">Teeth Wizard</h1>
+          <div className="">
+            <h1 className="text-xl font-medium">Teeth Wizard Auth 2</h1>
+            <p className="text-sm">Demo app created for educational purposes</p>
+          </div>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          {user && user?.email ? (
+          {user ? (
             <div className="flex gap-2 items-center">
-              <p>{user.email}</p>
+              <p>{user.displayName || "signed user"}</p>
               <button onClick={handleUserLogoutClick} className="btn btn-error">
                 Logout
               </button>

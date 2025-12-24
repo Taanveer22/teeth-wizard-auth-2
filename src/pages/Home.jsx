@@ -2,6 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import Banner from "../components/Banner";
 import Service from "../components/Service";
 import Feedback from "../components/Feedback";
+import Privacy from "../components/Privacy";
 
 const Home = () => {
   const loaderData = useLoaderData();

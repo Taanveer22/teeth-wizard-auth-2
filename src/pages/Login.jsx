@@ -21,25 +21,25 @@ const Login = () => {
 
     // === firebase log in ===
     handleUserLogin(email, password)
-      .then((result) => {
+      .then(() => {
         // no need to manually setUser() state here
-        toast.success(result.user.email);
+        toast.success("login done");
         // === RESET FORM FIELDS ===
         form.reset();
       })
-      .catch((error) => {
-        setErrorMessage(error.message);
+      .catch(() => {
+        setErrorMessage("login failed");
       });
   };
 
   const handleGoogleUserSignInClick = () => {
     handleGoogleUserSignIn()
-      .then((result) => {
+      .then(() => {
         // no need to manually setUser() state here
-        toast.success(result.user.email);
+        toast.success("google login done");
       })
-      .catch((error) => {
-        setErrorMessage(error.message);
+      .catch(() => {
+        setErrorMessage("google login failed");
       });
   };
   return (
