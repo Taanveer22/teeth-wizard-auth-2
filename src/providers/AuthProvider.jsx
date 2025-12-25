@@ -38,10 +38,17 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signOut(auth);
   };
-  // function 05
+  // function 05 no setLoading state
   const handleUpdateProfile = (userName, userPhoto) => {
-    setLoading(true);
+    // Fire and forget
     updateProfile(auth.currentUser, {
+      displayName: userName,
+      photoURL: userPhoto,
+    });
+    // manually update user in context
+    // Immediately update user state for navbar
+    setUser({
+      ...auth.currentUser,
       displayName: userName,
       photoURL: userPhoto,
     });

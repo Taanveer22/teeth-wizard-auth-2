@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { handleUserRegister, handleUpdateProfile } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleRegisterForm = async (e) => {
     e.preventDefault();
@@ -14,9 +16,6 @@ const Register = () => {
     const password = e.target.password.value;
     const conPass = e.target.conPass.value;
     console.log(name, photo, email, password, conPass);
-    
-    // Capture the form element to use inside the promise
-    const form = e.target;
 
     // == password validation ==
     if (password !== conPass) {
@@ -57,31 +56,52 @@ const Register = () => {
     setErrorMessage("");
 
     try {
+      // 1️⃣ Register the user
       await handleUserRegister(email, password);
-      toast.success("user register done");
-    } catch {
-      setErrorMessage("user registation failed");
-      return;
-    }
-
-    try {
+      // 2️⃣ Update the profile
       await handleUpdateProfile(name, photo);
-      toast.success("profile updated");
+      // 3️⃣ Show a single success toast
+      toast.success("registration and profile update done");
+      // 4️⃣ Reset form
+      e.target.reset();
+      // 5️⃣ Navigate after everything is done
+      navigate("/", { replace: true });
     } catch {
-      setErrorMessage("profile not updated");
-      return;
+      // Handle any error from register or profile update
+      setErrorMessage("failed to register and profile update");
     }
 
-    // finally reset form
-    form.reset();
+    // ========================================================================
+    // ================ firebase auth new method problem=======================
+    // ========================================================================
+    // try {
+    //   await handleUserRegister(email, password);
+    //   toast.success("user register done");
+    // } catch {
+    //   setErrorMessage("user registation failed");
+    //   return;
+    // }
 
+    // try {
+    //   await handleUpdateProfile(name, photo);
+    //   toast.success("profile updated");
+    //   navigate("/", { replace: true });
+    // } catch {
+    //   setErrorMessage("profile not updated");
+    //   return;
+    // }
+    // // finally reset form
+    // e.target.reset();
+
+    // ========================================================================
     // ==================== firebase auth old method ==========================
+    // ========================================================================
     // handleUserRegister(email, password)
     //   .then(() => {
     //     // no need to manually setUser() state here
     //     toast.success("user register done");
     //     // === RESET FORM FIELDS ===
-    //     form.reset();
+    //     e.target.reset();
     //     // === firebase function update profile ===
     //     handleUpdateProfile(name, photo)
     //       .then(() => {
@@ -94,6 +114,8 @@ const Register = () => {
     //   .catch(() => {
     //     setErrorMessage("unable to register");
     //   });
+    // .......................................................................
+    // ........................................................................
   };
 
   return (

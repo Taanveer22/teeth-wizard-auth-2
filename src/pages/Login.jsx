@@ -1,11 +1,15 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const Login = () => {
   const { handleGoogleUserSignIn, handleUserLogin } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
+  const location = useLocation();
+  // console.log(location);
+  const navigate = useNavigate();
+  // console.log(navigate);
 
   const handleLoginForm = async (e) => {
     e.preventDefault();
@@ -23,6 +27,8 @@ const Login = () => {
     try {
       await handleUserLogin(email, password);
       toast.success("login done");
+      // send preferred private route location
+      navigate(location.state.from, { replace: true });
       // after login done reset form
       form.reset();
     } catch {
@@ -61,11 +67,12 @@ const Login = () => {
     try {
       await handleGoogleUserSignIn();
       toast.success("google login done");
+      navigate(location.state.from, { replace: true });
     } catch {
       toast.error("google login failed");
     }
   };
-  
+
   return (
     <div className="flex justify-center items-center">
       <div>
