@@ -45,13 +45,13 @@ const AuthProvider = ({ children }) => {
       displayName: userName,
       photoURL: userPhoto,
     });
-    // manually update user in context
-    // Immediately update user state for navbar
-    setUser({
-      ...auth.currentUser,
-      displayName: userName,
-      photoURL: userPhoto,
-    });
+    // ===========manually update user in context=========
+    // setUser({
+    //   ...auth.currentUser,
+    //   displayName: userName,
+    //   photoURL: userPhoto,
+    // });
+    //======== Immediately update user state for navbar======
   };
   // === AuthContext data passed by value ====
   const authInfo = {
