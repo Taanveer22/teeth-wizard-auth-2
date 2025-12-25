@@ -9,7 +9,10 @@ import { Toaster } from "react-hot-toast";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={PublicRouter}></RouterProvider>
+      <RouterProvider
+        router={PublicRouter}
+        hydrateFallbackElement={<div>Loading...</div>}
+      ></RouterProvider>
       <Toaster />
     </AuthProvider>
   </StrictMode>

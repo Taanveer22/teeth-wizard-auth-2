@@ -4,14 +4,15 @@ import { AuthContext } from "../providers/AuthProvider";
 import toast from "react-hot-toast";
 
 const Navbar = () => {
+  
   const { user, handleUserLogout } = useContext(AuthContext);
-
   // console.log(user);
+
   const handleUserLogoutClick = () => {
     // == firebase log out ==
     handleUserLogout()
       .then(() => {
-        toast.success("Logout complete");
+        toast.success("logout complete");
       })
       .catch(() => {
         toast.error("logout failed");
@@ -101,15 +102,18 @@ const Navbar = () => {
         <div className="navbar-end">
           {user ? (
             <div className="flex gap-2 items-center">
-              <p>{user.displayName || "signed user"}</p>
+              <p>{user?.displayName || "signed user"}</p>
               <button onClick={handleUserLogoutClick} className="btn btn-error">
                 Logout
               </button>
             </div>
           ) : (
-            <Link to="/login" className="btn btn-success">
-              Login
-            </Link>
+            <div className="flex gap-2 items-center">
+              <p>{"no user"}</p>
+              <Link to="/login" className="btn btn-success">
+                Login
+              </Link>
+            </div>
           )}
         </div>
       </div>

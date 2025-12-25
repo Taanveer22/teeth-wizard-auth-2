@@ -7,12 +7,14 @@ import Profile from "../pages/Profile";
 import ServiceCardDetails from "../components/ServiceCardDetails";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import Privacy from "../components/Privacy";
+import NotFound from "../pages/NotFound";
+import PrivateRouter from "./PrivateRouter";
 
 const PublicRouter = createBrowserRouter([
   {
     path: "/",
     element: <Root></Root>,
+    errorElement: <NotFound></NotFound>,
     children: [
       {
         index: true,
@@ -45,7 +47,11 @@ const PublicRouter = createBrowserRouter([
       },
       {
         path: "/details/:id",
-        element: <ServiceCardDetails></ServiceCardDetails>,
+        element: (
+          <PrivateRouter>
+            <ServiceCardDetails></ServiceCardDetails>
+          </PrivateRouter>
+        ),
         loader: async ({ params }) => {
           // all data load
           const res = await fetch("/service.json");
@@ -64,7 +70,6 @@ const PublicRouter = createBrowserRouter([
         path: "/register",
         element: <Register></Register>,
       },
-     
     ],
   },
 ]);
