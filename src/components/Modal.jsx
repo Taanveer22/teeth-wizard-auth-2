@@ -4,6 +4,7 @@ const Modal = ({ treatment }) => {
   // console.log(treatment);
   const handleModalFormSubmit = (e) => {
     e.preventDefault();
+    const serial = e.target.serial.value;
     const name = e.target.name.value;
     const email = e.target.email.value;
     const phone = e.target.phone.value;
@@ -12,6 +13,7 @@ const Modal = ({ treatment }) => {
     // console.log(name, phone, address, date, email);
     const modalInfo = {
       treatment,
+      serial,
       name,
       email,
       phone,
@@ -38,6 +40,13 @@ const Modal = ({ treatment }) => {
         <div className="modal-box">
           <form onSubmit={handleModalFormSubmit}>
             <fieldset className="fieldset">
+              <label className="label">Serial</label>
+              <input
+                name="serial"
+                type="text"
+                className="input"
+                placeholder="Serial"
+              />
               <label className="label">Name</label>
               <input
                 name="name"

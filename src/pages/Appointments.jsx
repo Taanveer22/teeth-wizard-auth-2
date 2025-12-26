@@ -21,7 +21,7 @@ const Appointments = () => {
       localSavedData = userData;
     }
   } else {
-    // If there is no user or no email, also use an empty array 
+    // If there is no user or no email, also use an empty array
     localSavedData = [];
   }
 
@@ -55,17 +55,21 @@ const Appointments = () => {
 
   return (
     <div>
-      <h1> total :{localSavedData.length}</h1>
+      <h1 className="text-4xl font-semibold text-center mb-4">
+        Total Booked Appointments :{localSavedData.length}
+      </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {localSavedData.length > 0 ? (
           localSavedData.map((apptElement) => (
             <SingleAppointment
-              key={apptElement.date}
+              key={apptElement.serial}
               apptElement={apptElement}
             ></SingleAppointment>
           ))
         ) : (
-          <p>No Appointments Found</p>
+          <p className="text-3xl font-bold text-yellow-500 text-center">
+            No Appointments Found
+          </p>
         )}
       </div>
     </div>
