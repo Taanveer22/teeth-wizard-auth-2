@@ -76,7 +76,7 @@ const Appointments = () => {
             <SingleAppointment
               key={apptElement.serial}
               apptElement={apptElement}
-              onRemove={handleCancelAppointment}
+              handleCancelAppointment={handleCancelAppointment}
             ></SingleAppointment>
           ))
         ) : (

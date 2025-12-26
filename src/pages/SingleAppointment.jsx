@@ -1,5 +1,8 @@
-const SingleAppointment = ({ apptElement }) => {
+const SingleAppointment = ({ apptElement, handleCancelAppointment }) => {
   // console.log(apptElement);
+  const handleCancelAppointmentClick = () => {
+    handleCancelAppointment(apptElement?.serial);
+  };
   return (
     <div>
       <div className="card bg-neutral text-neutral-content">
@@ -11,7 +14,12 @@ const SingleAppointment = ({ apptElement }) => {
           <p>{apptElement?.email}</p>
           <p>{apptElement?.address}</p>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary">Cancel Appointment</button>
+            <button
+              onClick={handleCancelAppointmentClick}
+              className="btn btn-primary"
+            >
+              Cancel Appointment
+            </button>
           </div>
         </div>
       </div>
