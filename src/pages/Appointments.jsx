@@ -1,45 +1,57 @@
-// import {  useEffect, useState } from "react";
-import { useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-import { getAppointmentsByEmail } from "../utils/localStorage";
+import {
+  getAppointmentsByEmail,
+  removeAppointment,
+} from "../utils/localStorage";
 import SingleAppointment from "./SingleAppointment";
 
 const Appointments = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
+  const [localSavedData, setLocalSavedData] = useState([]);
 
-  // declare the variable first
-  let localSavedData;
-  if (user && user?.email) {
-    // If user exists AND has an email
-    const userData = getAppointmentsByEmail(user.email);
-    if (userData === null || userData === undefined) {
-      // If the function returned nothing, use an empty array
-      localSavedData = [];
+  useEffect(() => {
+    if (user?.email) {
+      const userData = getAppointmentsByEmail(user.email);
+      // console.log(userData);
+      setLocalSavedData(userData);
     } else {
-      // Otherwise, use the data returned
-      localSavedData = userData;
+      setLocalSavedData([]);
     }
-  } else {
-    // If there is no user or no email, also use an empty array
-    localSavedData = [];
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
-  // ==============================================================
-  // const [localSavedData, setLocalSavedData] = useState([]);
-  // ================================================================
-  // ======= problematic system 02 ======================
-  // useEffect(() => {
-  //   if (user?.email) {
-  //     const userData = getAppointmentsByEmail(user.email);
-  //     console.log(userData);
-  //     setLocalSavedData(userData);
+  const handleCancelAppointment = (serial) => {
+    removeAppointment(serial);
+
+    // remove from UI (state)
+    setLocalSavedData((prev) =>
+      prev.filter((element) => element.serial !== serial)
+    );
+  };
+
+  // ============================================================
+  // ======= alternative but not recommended ======================
+  // // declare the variable first
+  // let localSavedData;
+  // if (user && user?.email) {
+  //   // If user exists AND has an email
+  //   const userData = getAppointmentsByEmail(user.email);
+  //   if (userData === null || userData === undefined) {
+  //     // If the function returned nothing, use an empty array
+  //     localSavedData = [];
   //   } else {
-  //     setLocalSavedData([]);
+  //     // Otherwise, use the data returned
+  //     localSavedData = userData;
   //   }
-  // }, [user]);
+  // } else {
+  //   // If there is no user or no email, also use an empty array
+  //   localSavedData = [];
+  // }
+
   // ========================================================
-  // ======= problematic system 01 ======================
+  // ======= problematic solution ======================
   //  useEffect(() => {
   //   let saveData = [];
   //   const localData = localStorage.getItem("appts");
@@ -64,6 +76,7 @@ const Appointments = () => {
             <SingleAppointment
               key={apptElement.serial}
               apptElement={apptElement}
+              onRemove={handleCancelAppointment}
             ></SingleAppointment>
           ))
         ) : (

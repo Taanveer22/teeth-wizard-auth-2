@@ -23,3 +23,12 @@ export const getAppointmentsByEmail = (email) => {
   let saveData = getAppointments();
   return saveData.filter((item) => item.email === email);
 };
+
+// remove a appointment form local storage
+export const removeAppointment = (serial) => {
+  let saveData = getAppointments();
+  // filter out the appointment that matches the given serial
+  const filteredData = saveData.filter((item) => item.serial !== serial);
+  // save the new array back to localStorage
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(filteredData));
+};
