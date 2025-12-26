@@ -31,7 +31,7 @@ const ServiceCardDetails = () => {
           </div>
         </div>
       </div>
-      <Modal></Modal>
+      <Modal treatment={singleData?.treatment}></Modal>
     </div>
   );
 };
